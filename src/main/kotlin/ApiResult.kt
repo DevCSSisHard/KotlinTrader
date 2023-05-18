@@ -1,6 +1,6 @@
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class apiResponse(
-    
+data class ApiResult(
+    val data: RegistrationResult,
 )

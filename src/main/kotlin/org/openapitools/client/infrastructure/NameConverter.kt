@@ -1,4 +1,15 @@
 package org.openapitools.client.infrastructure
 
-class NameConverter {
+import java.util.*
+
+class NameConverter(private val input: String) {
+    companion object {
+        fun convertToReadable(tradeSymbol: String): Any? {
+            val words = tradeSymbol.split("_").map {
+                it.lowercase()
+                    .replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
+            }
+            return words.joinToString(" ")
+        }
+    }
 }
