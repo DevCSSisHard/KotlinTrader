@@ -4,19 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8ffc3421-96e1-4f2a-96ef-3b89cc838af0" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/kotlinc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/kotlinc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="8ffc3421-96e1-4f2a-96ef-3b89cc838af0" name="Changes" comment="Shipyard check + Basic info framework">
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/openapitools/client/apis/Ships.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ApiResult.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ApiResult.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/Main.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Main.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/RegistrationData.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/RegistrationData.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/org/openapitools/client/apis/Contracts.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/org/openapitools/client/apis/Contracts.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/org/openapitools/client/apis/Waypoints.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/org/openapitools/client/apis/Waypoints.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/org/openapitools/client/infrastructure/NameConverter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/org/openapitools/client/infrastructure/NameConverter.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -68,8 +59,8 @@
 }</component>
   <component name="RecentsManager">
     <key name="CreateKotlinClassDialog.RecentsKey">
-      <recent name="org.openapitools.client.infrastructure" />
       <recent name="org.openapitools.client.apis" />
+      <recent name="org.openapitools.client.infrastructure" />
     </key>
     <key name="MoveKotlinTopLevelDeclarationsDialog.RECENTS_KEY">
       <recent name="org.openapitools.client.apis" />
@@ -103,8 +94,18 @@
       <workItem from="1684274276464" duration="5056000" />
       <workItem from="1684345576316" duration="3405000" />
       <workItem from="1684356638078" duration="2305000" />
-      <workItem from="1684362882572" duration="4913000" />
+      <workItem from="1684362882572" duration="5015000" />
+      <workItem from="1684431556981" duration="4526000" />
+      <workItem from="1684454381226" duration="5056000" />
     </task>
+    <task id="LOCAL-00001" summary="Shipyard check + Basic info framework">
+      <created>1684395051783</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1684395051783</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -120,6 +121,10 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Shipyard check + Basic info framework" />
+    <option name="LAST_COMMIT_MESSAGE" value="Shipyard check + Basic info framework" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

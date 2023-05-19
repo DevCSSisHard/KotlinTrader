@@ -8,6 +8,7 @@ import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.serialization.kotlinx.json.*
 import org.openapitools.client.*
 import org.openapitools.client.apis.Contracts
+import org.openapitools.client.apis.Ships
 import org.openapitools.client.apis.Waypoints
 import org.openapitools.client.models.*
 import java.lang.System
@@ -26,6 +27,17 @@ suspend fun main(args: Array<String>) {
         println("***** Waiting for input *****")
         val input = readLine()!!
         when(input.lowercase()) {
+            "Ships".lowercase() -> {
+                val response: HttpResponse = client.get("https://api.spacetraders.io/v2/my/ships") {
+                    bearerAuth(token)
+                    contentType(ContentType.Application.Json)
+                }
+                val apiResponse: GetMyShips200Response = response.body()
+
+                for (ship in apiResponse.data) {
+                    Ships.shipReport(ship)
+                }
+            }
             "Waypoints".lowercase() -> {
                 val response: HttpResponse = client.get("https://api.spacetraders.io/v2/systems/X1-ZA40/waypoints") {
                     bearerAuth(token)
