@@ -35,6 +35,9 @@ class Ships {
         fun getLocation(ship: Ship): String {
             return ship.nav.waypointSymbol
         }
+        fun getLocationSystem(ship: Ship): String {
+            return ship.nav.systemSymbol
+        }
         fun getStatus(ship: Ship): String {
             return ship.nav.status.toString()
         }

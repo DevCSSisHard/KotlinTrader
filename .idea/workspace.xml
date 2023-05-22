@@ -4,10 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8ffc3421-96e1-4f2a-96ef-3b89cc838af0" name="Changes" comment="Shipyard check + Basic info framework">
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/openapitools/client/apis/Ships.kt" afterDir="false" />
+    <list default="true" id="8ffc3421-96e1-4f2a-96ef-3b89cc838af0" name="Changes" comment="Ship information report">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/Main.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Main.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/org/openapitools/client/apis/Ships.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/org/openapitools/client/apis/Ships.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,19 +44,19 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;H:/JavaStuff/SpaceTraderIO/src/main/kotlin/org/openapitools/client/apis/SystemsApi.kt&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.30677655&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.projectsettings.compiler.excludes&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "H:/JavaStuff/SpaceTraderIO/src/main/kotlin/org/openapitools/client/apis/SystemsApi.kt",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.30677655",
+    "settings.editor.selected.configurable": "reference.projectsettings.compiler.javacompiler"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CreateKotlinClassDialog.RecentsKey">
       <recent name="org.openapitools.client.apis" />
@@ -69,7 +69,7 @@
   <component name="RunManager">
     <configuration name="MainKt" type="JetRunConfigurationType" nameIsGenerated="true">
       <envs>
-        <env name="token" value="eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGlmaWVyIjoiUlVOREEiLCJpYXQiOjE2ODQxMTE0NjMsInN1YiI6ImFnZW50LXRva2VuIn0.Dqd0AOIsTD6zw5z9fjTAFvdsy06hrO3bELB4pdkBJfNZjbvZN3i4ky3TUmi5U1_yhIeyvm96CzCqlI6gcBJf-ji3CM6MvaVgfEOk2VvqOCuGuMxyZTU-MT9BI8zzXqVsvLu6XUaO7RsxpM3kzk2GHgOVKk753VtSMgLg6R3ynLNmCCEOA84mS80dmhAFdKzfZzkdZxVFPhAxKyYrGgGcBCA4DbYn1YkVRSzMj6W39juqO1NNAUjhblfud_aPVRSX1GQ1kWzQlmoJfxusX0l6amx2yfyC3K3YIfTzEW8587k4CHbhmJZyVQawz8b3p0mDljJJTsrrfiacrm4ImNRLTg" />
+        <env name="token" value="eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGlmaWVyIjoiUlVOREEiLCJ2ZXJzaW9uIjoidjIiLCJyZXNldF9kYXRlIjoiMjAyMy0wNS0yMCIsImlhdCI6MTY4NDc4MDYyNywic3ViIjoiYWdlbnQtdG9rZW4ifQ.jLbI9AiS5NX7fce0rctXlOxrl154luYMkmp5uAgAn1s-DOTGFL2edzbqr4cFcJVpTY_GacYaS1XikYp8xXXmqvM-akHv7dH-vkwKC86V29my-OM0cvXqbcHN80ExMYjuBhuE92OhFPraPrdr2ssH64QeHaZ8qmySK8Sa6BZ-AGxqQTGQv_yMMu7p6AG7clp1Ro5pJ8_vJZyYBDEUXy6L3NDLT4hfIjv2dkTOu7a53KZQe1uaLkeZdZZx5NwwQcyMYKOs51jsAyopbgAJ8GT7sWUc0dJAQhd8XSLayNfK7khjSq-KrRY9aJKpxaV5jV8kzbOo6boZ42XkIxos2b5gtw" />
       </envs>
       <option name="MAIN_CLASS_NAME" value="MainKt" />
       <module name="SpaceTraderIO.main" />
@@ -96,7 +96,8 @@
       <workItem from="1684356638078" duration="2305000" />
       <workItem from="1684362882572" duration="5015000" />
       <workItem from="1684431556981" duration="4526000" />
-      <workItem from="1684454381226" duration="5056000" />
+      <workItem from="1684454381226" duration="5103000" />
+      <workItem from="1684778191395" duration="8114000" />
     </task>
     <task id="LOCAL-00001" summary="Shipyard check + Basic info framework">
       <created>1684395051783</created>
@@ -105,7 +106,14 @@
       <option name="project" value="LOCAL" />
       <updated>1684395051783</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Ship information report">
+      <created>1684465431957</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1684465431957</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -124,7 +132,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Shipyard check + Basic info framework" />
-    <option name="LAST_COMMIT_MESSAGE" value="Shipyard check + Basic info framework" />
+    <MESSAGE value="Ship information report" />
+    <option name="LAST_COMMIT_MESSAGE" value="Ship information report" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
