@@ -4,10 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8ffc3421-96e1-4f2a-96ef-3b89cc838af0" name="Changes" comment="Ship information report">
+    <list default="true" id="8ffc3421-96e1-4f2a-96ef-3b89cc838af0" name="Changes" comment="API Update fix">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/Main.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Main.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/org/openapitools/client/apis/Ships.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/org/openapitools/client/apis/Ships.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/org/openapitools/client/apis/Waypoints.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/org/openapitools/client/apis/Waypoints.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,19 +44,19 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "H:/JavaStuff/SpaceTraderIO/src/main/kotlin/org/openapitools/client/apis/SystemsApi.kt",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.30677655",
-    "settings.editor.selected.configurable": "reference.projectsettings.compiler.javacompiler"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;H:/JavaStuff/SpaceTraderIO/src/main/kotlin/org/openapitools/client/apis/SystemsApi.kt&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.30677655&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.projectsettings.compiler.javacompiler&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CreateKotlinClassDialog.RecentsKey">
       <recent name="org.openapitools.client.apis" />
@@ -97,7 +97,9 @@
       <workItem from="1684362882572" duration="5015000" />
       <workItem from="1684431556981" duration="4526000" />
       <workItem from="1684454381226" duration="5103000" />
-      <workItem from="1684778191395" duration="8114000" />
+      <workItem from="1684778191395" duration="8363000" />
+      <workItem from="1684797405289" duration="594000" />
+      <workItem from="1684967434099" duration="4947000" />
     </task>
     <task id="LOCAL-00001" summary="Shipyard check + Basic info framework">
       <created>1684395051783</created>
@@ -113,7 +115,14 @@
       <option name="project" value="LOCAL" />
       <updated>1684465431957</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="API Update fix">
+      <created>1684787741931</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1684787741931</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -133,7 +142,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Shipyard check + Basic info framework" />
     <MESSAGE value="Ship information report" />
-    <option name="LAST_COMMIT_MESSAGE" value="Ship information report" />
+    <MESSAGE value="API Update fix" />
+    <option name="LAST_COMMIT_MESSAGE" value="API Update fix" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

@@ -45,6 +45,9 @@ class Waypoints {
             println("***** Shipyards *****")
             println(shipyardList.joinToString(" "))
         }
+        fun viewShipYards(apiResponse: GetSystemWaypoints200Response) {
+
+        }
     }
 }
 
