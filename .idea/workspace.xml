@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8ffc3421-96e1-4f2a-96ef-3b89cc838af0" name="Changes" comment="Reformatting and cleaning of code.">
+    <list default="true" id="8ffc3421-96e1-4f2a-96ef-3b89cc838af0" name="Changes" comment="Basic Navigation + Docking">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/Main.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Main.kt" afterDir="false" />
     </list>
@@ -100,7 +100,7 @@
       <workItem from="1684797405289" duration="594000" />
       <workItem from="1684967434099" duration="5021000" />
       <workItem from="1685073262001" duration="2610000" />
-      <workItem from="1685135572703" duration="1842000" />
+      <workItem from="1685135572703" duration="5638000" />
     </task>
     <task id="LOCAL-00001" summary="Shipyard check + Basic info framework">
       <created>1684395051783</created>
@@ -137,7 +137,14 @@
       <option name="project" value="LOCAL" />
       <updated>1685075866905</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Basic Navigation + Docking">
+      <created>1685137738924</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1685137738924</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -160,7 +167,8 @@
     <MESSAGE value="API Update fix" />
     <MESSAGE value="Ship Purchase / Selection + Default ship." />
     <MESSAGE value="Reformatting and cleaning of code." />
-    <option name="LAST_COMMIT_MESSAGE" value="Reformatting and cleaning of code." />
+    <MESSAGE value="Basic Navigation + Docking" />
+    <option name="LAST_COMMIT_MESSAGE" value="Basic Navigation + Docking" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

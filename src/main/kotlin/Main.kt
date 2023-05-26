@@ -32,13 +32,24 @@ suspend fun main(args: Array<String>) {
         println("***** Waiting for input *****")
         val input = readLine()!!
         when  {
+            input.startsWith("Extract", ignoreCase = true) -> {
+                val shipSymbol = input.split(" ")[1]
+                extractResources(client,shipSymbol)
+            }
+            input.startsWith("Orbit", ignoreCase = true) || input.startsWith("Undock", ignoreCase = true) -> {
+                val shipSymbol = input.split(" ")[1]
+                undockShip(client,shipSymbol)
+            }
+            input.startsWith("Refuel", ignoreCase = true) -> {
+                val shipSymbol = input.split(" ")[1]
+                refuelShip(client,shipSymbol)
+            }
             input.startsWith("Dock", ignoreCase = true) -> {
-                val splitInput = input.split(" ").toTypedArray()
-                val shipSymbol = splitInput[1]
+                val shipSymbol = input.split(" ")[1]
                 dockAtLocation(client,shipSymbol)
             }
             input.startsWith("Move", ignoreCase = true) -> {
-                val splitInput = input.split(" ").toTypedArray()
+                val splitInput = input.split(" ")
                 val locationToGo = splitInput[2]
                 val shipSymbol = splitInput[1]
                 navigateToLocation(client, locationToGo, shipSymbol)
@@ -121,6 +132,54 @@ suspend fun main(args: Array<String>) {
         }
     }
     client.close()
+}
+
+/**
+ * Function to extract resources from whatever the ship is orbiting.
+ */
+suspend fun extractResources(client: HttpClient, shipSymbol: String) {
+    val response: HttpResponse = client.post("https://api.spacetraders.io/v2/my/ships/${shipSymbol}/extract") {
+        bearerAuth(token)
+        contentType(ContentType.Application.Json)
+        setBody(ExtractResourcesRequest(survey = null))
+    }
+    if (!response.status.isSuccess()) {
+        println("Error with extracting resources, drones cooling down.")
+        return
+    } else {
+        val apiResponse: ExtractResources201Response = response.body()
+        println(apiResponse)
+        println("Extracted "+ apiResponse.data.extraction.yield.units + " units of "+apiResponse.data.extraction.yield.symbol)
+    }
+}
+
+/**
+ * Undock a waypoint and enter orbit.
+ */
+suspend fun undockShip(client: HttpClient, shipSymbol: String) {
+    val response: HttpResponse = client.post("https://api.spacetraders.io/v2/my/ships/${shipSymbol}/orbit") {
+        bearerAuth(token)
+        contentType(ContentType.Application.Json)
+    }
+    val apiResponse: OrbitShip200Response = response.body()
+    println("${shipSymbol} has entered orbit around "+apiResponse.data.nav.waypointSymbol)
+}
+
+/**
+ * Function to refuel a docked ship - if there is a marketplace.
+ */
+suspend fun refuelShip(client: HttpClient, shipSymbol: String) {
+    //TODO: Move these off into class for formatting maybe
+    val response: HttpResponse = client.post("https://api.spacetraders.io/v2/my/ships/${shipSymbol}/refuel") {
+        bearerAuth(token)
+        contentType(ContentType.Application.Json)
+    }
+    val apiResponse: RefuelShip200Response = response.body()
+    if(apiResponse.data.transaction.totalPrice > 0) {
+        println("Purchased "+apiResponse.data.transaction.units +" units of fuel at "+ apiResponse.data.transaction.pricePerUnit+ " per unit.")
+    } else {
+        println("Validate waypoint has a market, or ship is not full on fuel. Error with purchase." + apiResponse.data + " " + response.status)
+    }
 }
 
 /**
