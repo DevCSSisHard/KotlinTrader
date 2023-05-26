@@ -32,6 +32,17 @@ suspend fun main(args: Array<String>) {
         println("***** Waiting for input *****")
         val input = readLine()!!
         when  {
+            input.startsWith("Dock", ignoreCase = true) -> {
+                val splitInput = input.split(" ").toTypedArray()
+                val shipSymbol = splitInput[1]
+                dockAtLocation(client,shipSymbol)
+            }
+            input.startsWith("Move", ignoreCase = true) -> {
+                val splitInput = input.split(" ").toTypedArray()
+                val locationToGo = splitInput[2]
+                val shipSymbol = splitInput[1]
+                navigateToLocation(client, locationToGo, shipSymbol)
+            }
             input.startsWith("Purchase Ship", ignoreCase = true) -> {
                 //val location = Ships.getLocationSystem(selectedShip!!)
                 //Generalize This + Move to class/Function.
@@ -110,6 +121,49 @@ suspend fun main(args: Array<String>) {
         }
     }
     client.close()
+}
+
+/**
+ * Function to request a ship to dock at its current waypoint.
+ * Doesn't handle any errors currently, don't mess up!
+ * @param shipSymbol The Ship Symbol to request a dock at its waypoint.
+ */
+suspend fun dockAtLocation(client: HttpClient, shipSymbol: String) {
+    //TODO: Move these off into their own classes for formatting.
+    val response: HttpResponse = client.post("https://api.spacetraders.io/v2/my/ships/${shipSymbol}/dock") {
+        bearerAuth(token)
+        contentType(ContentType.Application.Json)
+    }
+    val apiResponse: DockShip200Response = response.body()
+    println("Ship ${shipSymbol} has docked at "+ apiResponse.data.nav.waypointSymbol)
+}
+
+/**
+ * Function to tell a ship to navigate/move to a waypoint
+ * @param locationToGo The desired waypoint symbol for the ship to move to.
+ * @param shipSymbol The ship to move
+ */
+suspend fun navigateToLocation(client: HttpClient, locationToGo: String, shipSymbol: String) {
+    //TODO: Move these off into their own classes for formatting.
+    val response: HttpResponse = client.post("https://api.spacetraders.io/v2/my/ships/${shipSymbol}/navigate") {
+        bearerAuth(token)
+        contentType(ContentType.Application.Json)
+        setBody(NavigateShipRequest(locationToGo))
+    }
+    val apiResponse: NavigateShip200Response = response.body()
+
+    println("Ship en-route to: "+ apiResponse.data.nav.route.destination)
+    println("Expected arrival at :"+apiResponse.data.nav.route.arrival)
+    println("Ship Status: "+apiResponse.data.nav.status + " Flight mode: "+apiResponse.data.nav.flightMode)
+    //output of generic apiResponse.data ;
+    //println(apiResponse.data)
+    /*
+    NavigateShip200ResponseData(fuel=ShipFuel(current=64, capacity=100, consumed=ShipFuelConsumed(amount=36, timestamp=2023-05-26T21:34:38.995Z)),
+    nav=ShipNav(systemSymbol=X1-VS75, waypointSymbol=X1-VS75-67965Z, route=ShipNavRoute(destination=ShipNavRouteWaypoint(symbol=X1-VS75-67965Z,
+    type=ASTEROID_FIELD, systemSymbol=X1-VS75, x=-11, y=-27), departure=ShipNavRouteWaypoint(symbol=X1-VS75-97637F, type=ORBITAL_STATION,
+    systemSymbol=X1-VS75, x=-46, y=-19),
+    departureTime=2023-05-26T21:34:38.985Z, arrival=2023-05-26T21:37:53.985Z), status=IN_TRANSIT, flightMode=CRUISE))
+     */
 }
 
 /**

@@ -4,10 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8ffc3421-96e1-4f2a-96ef-3b89cc838af0" name="Changes" comment="API Update fix">
+    <list default="true" id="8ffc3421-96e1-4f2a-96ef-3b89cc838af0" name="Changes" comment="Reformatting and cleaning of code.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/Main.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Main.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/org/openapitools/client/apis/Waypoints.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/org/openapitools/client/apis/Waypoints.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -99,7 +98,9 @@
       <workItem from="1684454381226" duration="5103000" />
       <workItem from="1684778191395" duration="8363000" />
       <workItem from="1684797405289" duration="594000" />
-      <workItem from="1684967434099" duration="4947000" />
+      <workItem from="1684967434099" duration="5021000" />
+      <workItem from="1685073262001" duration="2610000" />
+      <workItem from="1685135572703" duration="1842000" />
     </task>
     <task id="LOCAL-00001" summary="Shipyard check + Basic info framework">
       <created>1684395051783</created>
@@ -122,7 +123,21 @@
       <option name="project" value="LOCAL" />
       <updated>1684787741931</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Ship Purchase / Selection + Default ship.">
+      <created>1684974041525</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1684974041525</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Reformatting and cleaning of code.">
+      <created>1685075866905</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1685075866905</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -143,7 +158,9 @@
     <MESSAGE value="Shipyard check + Basic info framework" />
     <MESSAGE value="Ship information report" />
     <MESSAGE value="API Update fix" />
-    <option name="LAST_COMMIT_MESSAGE" value="API Update fix" />
+    <MESSAGE value="Ship Purchase / Selection + Default ship." />
+    <MESSAGE value="Reformatting and cleaning of code." />
+    <option name="LAST_COMMIT_MESSAGE" value="Reformatting and cleaning of code." />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
