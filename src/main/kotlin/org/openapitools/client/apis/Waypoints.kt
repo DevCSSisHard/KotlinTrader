@@ -45,8 +45,12 @@ class Waypoints {
             println("***** Shipyards *****")
             println(shipyardList.joinToString(" "))
         }
-        fun viewShipYards(apiResponse: GetSystemWaypoints200Response) {
-
+        fun getShipYards(apiResponse: GetSystemWaypoints200Response): String {
+            val shipyardList = getShipyards(apiResponse)
+            println("***** Shipyards *****")
+            println(shipyardList.joinToString(" "))
+            // Return the first shipyard always for now.
+            return shipyardList[0]
         }
     }
 }
