@@ -4,9 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8ffc3421-96e1-4f2a-96ef-3b89cc838af0" name="Changes" comment="Basic Navigation + Docking">
+    <list default="true" id="8ffc3421-96e1-4f2a-96ef-3b89cc838af0" name="Changes" comment="Mining Addition + Undocking.">
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/openapitools/client/apis/Markets.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/Main.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Main.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/org/openapitools/client/infrastructure/NameConverter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/org/openapitools/client/infrastructure/NameConverter.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -100,7 +102,9 @@
       <workItem from="1684797405289" duration="594000" />
       <workItem from="1684967434099" duration="5021000" />
       <workItem from="1685073262001" duration="2610000" />
-      <workItem from="1685135572703" duration="5638000" />
+      <workItem from="1685135572703" duration="5922000" />
+      <workItem from="1685433997223" duration="705000" />
+      <workItem from="1685565636050" duration="6910000" />
     </task>
     <task id="LOCAL-00001" summary="Shipyard check + Basic info framework">
       <created>1684395051783</created>
@@ -144,7 +148,14 @@
       <option name="project" value="LOCAL" />
       <updated>1685137738924</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Mining Addition + Undocking.">
+      <created>1685141524279</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1685141524279</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -168,7 +179,8 @@
     <MESSAGE value="Ship Purchase / Selection + Default ship." />
     <MESSAGE value="Reformatting and cleaning of code." />
     <MESSAGE value="Basic Navigation + Docking" />
-    <option name="LAST_COMMIT_MESSAGE" value="Basic Navigation + Docking" />
+    <MESSAGE value="Mining Addition + Undocking." />
+    <option name="LAST_COMMIT_MESSAGE" value="Mining Addition + Undocking." />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

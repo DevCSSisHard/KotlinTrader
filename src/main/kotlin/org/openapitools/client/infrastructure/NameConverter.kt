@@ -11,5 +11,9 @@ class NameConverter(private val input: String) {
             }
             return words.joinToString(" ")
         }
+
+        fun convertToInternal(goodToSell: String): String {
+            return goodToSell.uppercase().replace(" ", "_")
+        }
     }
 }

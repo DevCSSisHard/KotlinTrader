@@ -8,8 +8,10 @@ import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.serialization.kotlinx.json.*
 import kotlinx.serialization.json.Json
 import org.openapitools.client.apis.Contracts
+import org.openapitools.client.apis.Markets
 import org.openapitools.client.apis.Ships
 import org.openapitools.client.apis.Waypoints
+import org.openapitools.client.infrastructure.NameConverter
 import org.openapitools.client.models.*
 import java.lang.System
 
@@ -32,11 +34,64 @@ suspend fun main(args: Array<String>) {
         println("***** Waiting for input *****")
         val input = readLine()!!
         when  {
+            input.startsWith("Sell",ignoreCase = true) -> {
+                //TODO: Move this.
+                displayShipList(client)
+                println("Select a ship: ")
+                val shipToSellFromRaw = readLine()!!
+                val shipToSellFrom = selectAShip(client, shipToSellFromRaw)
+                if(shipToSellFrom == null) {
+                    println("Error viewing ship to sell from. Try again.")
+                    continue
+                }
+                println("Ship info and cargo: ")
+                Ships.getShipCargo(shipToSellFrom)
+                println("Item to sell: ")
+                val goodToSellString = readLine()!!
+                println("Amount to sell: ")
+                val amountToSellString = readLine()!!
+                val amountToSell = amountToSellString.toInt()
+                val goodToSell = NameConverter.convertToInternal(goodToSellString)
+                println(goodToSell + " "+ amountToSellString)
+
+                val response: HttpResponse = client.post("https://api.spacetraders.io/v2/my/ships/${shipToSellFrom.symbol}/sell") {
+                    bearerAuth(token)
+                    contentType(ContentType.Application.Json)
+                    setBody(SellCargoRequest(goodToSell,amountToSell))
+                }
+                //val rawContent:String = response.bodyAsText()
+                //println(rawContent)
+                val apiResponse: SellCargo201Response = response.body()
+                //println(response.status)
+                println("Sold "+ apiResponse.data.transaction.units + " units of "+ apiResponse.data.transaction.tradeSymbol + " for a total of " + apiResponse.data.transaction.totalPrice)
+            }
+            input.startsWith("Market", ignoreCase = true) -> {
+                if (selectedShip != null) {
+                    if (selectedShip.nav.status.value != "DOCKED"){
+                        viewMarket(client,selectedShip, 0)
+                    } else {
+                        viewMarket(client,selectedShip,1)
+                    }
+                } else {
+                    println("Error with ship selection, be sure a ship is selected.")
+                    continue
+                }
+
+            }
             input.startsWith("Extract", ignoreCase = true) -> {
+                if (input.equals("Extract", ignoreCase = true)) {
+                    extractResources(client,selectedShip!!.symbol)
+                    continue
+                }
                 val shipSymbol = input.split(" ")[1]
                 extractResources(client,shipSymbol)
             }
             input.startsWith("Orbit", ignoreCase = true) || input.startsWith("Undock", ignoreCase = true) -> {
+                if (input.equals("undock", ignoreCase = true) || input.equals("Orbit", ignoreCase = true)) {
+                    val shipSymbol = selectedShip
+                    undockShip(client,shipSymbol!!.symbol)
+                    continue
+                }
                 val shipSymbol = input.split(" ")[1]
                 undockShip(client,shipSymbol)
             }
@@ -45,10 +100,19 @@ suspend fun main(args: Array<String>) {
                 refuelShip(client,shipSymbol)
             }
             input.startsWith("Dock", ignoreCase = true) -> {
+                if (input.equals("Dock", ignoreCase = true)) {
+                    val shipSymbol = selectedShip
+                    dockAtLocation(client, shipSymbol!!.symbol)
+                    continue
+                }
                 val shipSymbol = input.split(" ")[1]
                 dockAtLocation(client,shipSymbol)
             }
             input.startsWith("Move", ignoreCase = true) -> {
+                if (input.split(" ").size < 3) {
+                    println("Missing parameters - Command Syntax is: Move [Ship] [Location]")
+                    continue
+                }
                 val splitInput = input.split(" ")
                 val locationToGo = splitInput[2]
                 val shipSymbol = splitInput[1]
@@ -132,6 +196,41 @@ suspend fun main(args: Array<String>) {
         }
     }
     client.close()
+}
+
+/**
+ * Function to display market information
+ * @param i - Essentially a boolean if ship is docked or not, a docked ship can see transaction information, orbiting ships cannot.
+ */
+suspend fun viewMarket(client: HttpClient, selectedShip: Ship?, i: Int) {
+    if(selectedShip == null) {
+        println("Ship Selection Error")
+        return
+    }
+    if(i == 0){
+        val shipSystem = selectedShip.nav.systemSymbol
+        val shipLocation = selectedShip.nav.waypointSymbol
+        val response: HttpResponse = client.get("https://api.spacetraders.io/v2/systems/${shipSystem}/waypoints/${shipLocation}/market") {
+            bearerAuth(token)
+            contentType(ContentType.Application.Json)
+        }
+        val apiResponse: GetMarket200Response = response.body()
+        //println(apiResponse)
+        Markets.viewMarkets(apiResponse)
+    }
+    if (i == 1){
+        val shipSystem = selectedShip.nav.systemSymbol
+        val shipLocation = selectedShip.nav.waypointSymbol
+        val response: HttpResponse = client.get("https://api.spacetraders.io/v2/systems/${shipSystem}/waypoints/${shipLocation}/market") {
+            bearerAuth(token)
+            contentType(ContentType.Application.Json)
+        }
+        val apiResponse: GetMarket200Response = response.body()
+        Markets.viewMarkets(apiResponse)
+        Markets.viewTransactions(apiResponse)
+    }
+
+
 }
 
 /**
