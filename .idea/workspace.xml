@@ -4,11 +4,27 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8ffc3421-96e1-4f2a-96ef-3b89cc838af0" name="Changes" comment="API Updated + Command framework started, also moved HttpClient to its own object.">
+    <list default="true" id="8ffc3421-96e1-4f2a-96ef-3b89cc838af0" name="Changes" comment="Command Framework implemented. Migrations soon. Added Kotlin Reflections.">
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/CurrentData.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/openapitools/client/commands/Contracts.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/openapitools/client/commands/Default.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/openapitools/client/commands/Dock.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/openapitools/client/commands/Extract.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/openapitools/client/commands/Info.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/openapitools/client/commands/Market.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/openapitools/client/commands/Orbit.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/openapitools/client/commands/Purchase.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/openapitools/client/commands/Refuel.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/openapitools/client/commands/Report.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/openapitools/client/commands/Select.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/openapitools/client/commands/Sell.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/openapitools/client/commands/Shipyards.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/openapitools/client/commands/Undock.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/openapitools/client/commands/View.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/openapitools/client/commands/Waypoints.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/Main.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Main.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/org/openapitools/client/commands/Ships.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/org/openapitools/client/commands/Ships.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/org/openapitools/client/commands/Move.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/org/openapitools/client/commands/Move.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,6 +41,7 @@
       <list>
         <option value="Kotlin Sealed Interface" />
         <option value="Kotlin Object" />
+        <option value="Class" />
         <option value="Kotlin Class" />
       </list>
     </option>
@@ -107,7 +124,7 @@
       <workItem from="1685135572703" duration="5922000" />
       <workItem from="1685433997223" duration="705000" />
       <workItem from="1685565636050" duration="7182000" />
-      <workItem from="1686161957589" duration="5747000" />
+      <workItem from="1686161957589" duration="11191000" />
     </task>
     <task id="LOCAL-00001" summary="Shipyard check + Basic info framework">
       <created>1684395051783</created>
@@ -172,7 +189,14 @@
       <option name="project" value="LOCAL" />
       <updated>1686167621644</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Command Framework implemented. Migrations soon. Added Kotlin Reflections.">
+      <created>1686169810746</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1686169810746</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -200,7 +224,8 @@
     <MESSAGE value="Market Functions, Very unstable currently." />
     <MESSAGE value="API Updated + Command framework started." />
     <MESSAGE value="API Updated + Command framework started, also moved HttpClient to its own object." />
-    <option name="LAST_COMMIT_MESSAGE" value="API Updated + Command framework started, also moved HttpClient to its own object." />
+    <MESSAGE value="Command Framework implemented. Migrations soon. Added Kotlin Reflections." />
+    <option name="LAST_COMMIT_MESSAGE" value="Command Framework implemented. Migrations soon. Added Kotlin Reflections." />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

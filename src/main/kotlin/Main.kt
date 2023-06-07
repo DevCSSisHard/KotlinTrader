@@ -24,6 +24,7 @@ val commands = Command::class.sealedSubclasses.associate { commandClass ->
     val commandName = commandInstance.commandName.lowercase()
     commandName to commandInstance
 }
+//Ahaha.
 
 suspend fun main(args: Array<String>) {
     var loop = true
@@ -38,8 +39,6 @@ val client = HttpClient(CIO) {
  */
 
     println("\t***** Connected *****")
-    var selectedShip : Ship? = null
-    var lastShipYard = ""
     while (loop) {
         println("***** Waiting for input *****")
         val input = readln().lowercase()
@@ -56,161 +55,7 @@ val client = HttpClient(CIO) {
         }
         val remainingCommands = inputArgs.subList(1,inputArgs.size)
         command.processCommand(remainingCommands)
-        //All this is to be migrated to individual classes.
         when  {
-            input.startsWith("Sell",ignoreCase = true) -> {
-                //TODO: Move this.
-                displayShipList(HttpClientObject.client)
-                println("Select a ship: ")
-                val shipToSellFromRaw = readLine()!!
-                val shipToSellFrom = selectAShip(HttpClientObject.client, shipToSellFromRaw)
-                if(shipToSellFrom == null) {
-                    println("Error viewing ship to sell from. Try again.")
-                    continue
-                }
-                println("Ship info and cargo: ")
-                Ships.getShipCargo(shipToSellFrom)
-                println("Item to sell: ")
-                val goodToSellString = readLine()!!
-                println("Amount to sell: ")
-                val amountToSellString = readLine()!!
-                val amountToSell = amountToSellString.toInt()
-                val goodToSell = NameConverter.convertToInternal(goodToSellString)
-                println(goodToSell + " "+ amountToSellString)
-
-                val response: HttpResponse = HttpClientObject.client.post("https://api.spacetraders.io/v2/my/ships/${shipToSellFrom.symbol}/sell") {
-                    bearerAuth(token)
-                    contentType(ContentType.Application.Json)
-                    setBody(SellCargoRequest(goodToSell,amountToSell))
-                }
-                //val rawContent:String = response.bodyAsText()
-                //println(rawContent)
-                val apiResponse: SellCargo201Response = response.body()
-                //println(response.status)
-                println("Sold "+ apiResponse.data.transaction.units + " units of "+ apiResponse.data.transaction.tradeSymbol + " for a total of " + apiResponse.data.transaction.totalPrice)
-            }
-            input.startsWith("Market", ignoreCase = true) -> {
-                if (selectedShip != null) {
-                    if (selectedShip.nav.status.value != "DOCKED"){
-                        viewMarket(HttpClientObject.client,selectedShip, 0)
-                    } else {
-                        viewMarket(HttpClientObject.client,selectedShip,1)
-                    }
-                } else {
-                    println("Error with ship selection, be sure a ship is selected.")
-                    continue
-                }
-
-            }
-            input.startsWith("Extract", ignoreCase = true) -> {
-                if (input.equals("Extract", ignoreCase = true)) {
-                    extractResources(HttpClientObject.client,selectedShip!!.symbol)
-                    continue
-                }
-                val shipSymbol = input.split(" ")[1]
-                extractResources(HttpClientObject.client,shipSymbol)
-            }
-            input.startsWith("Orbit", ignoreCase = true) || input.startsWith("Undock", ignoreCase = true) -> {
-                if (input.equals("undock", ignoreCase = true) || input.equals("Orbit", ignoreCase = true)) {
-                    val shipSymbol = selectedShip
-                    undockShip(HttpClientObject.client,shipSymbol!!.symbol)
-                    continue
-                }
-                val shipSymbol = input.split(" ")[1]
-                undockShip(HttpClientObject.client,shipSymbol)
-            }
-            input.startsWith("Refuel", ignoreCase = true) -> {
-                val shipSymbol = input.split(" ")[1]
-                refuelShip(HttpClientObject.client,shipSymbol)
-            }
-            input.startsWith("Dock", ignoreCase = true) -> {
-                if (input.equals("Dock", ignoreCase = true)) {
-                    val shipSymbol = selectedShip
-                    dockAtLocation(HttpClientObject.client, shipSymbol!!.symbol)
-                    continue
-                }
-                val shipSymbol = input.split(" ")[1]
-                dockAtLocation(HttpClientObject.client,shipSymbol)
-            }
-            input.startsWith("Move", ignoreCase = true) -> {
-                if (input.split(" ").size < 3) {
-                    println("Missing parameters - Command Syntax is: Move [Ship] [Location]")
-                    continue
-                }
-                val splitInput = input.split(" ")
-                val locationToGo = splitInput[2]
-                val shipSymbol = splitInput[1]
-                navigateToLocation(HttpClientObject.client, locationToGo, shipSymbol)
-            }
-            input.startsWith("Purchase Ship", ignoreCase = true) -> {
-                //val location = Ships.getLocationSystem(selectedShip!!)
-                //Generalize This + Move to class/Function.
-                val location = lastShipYard
-                println("Shipyard Location: "+ location)
-                println("Ship to purchase: ")
-                val shipPurchase = readLine()!!
-                purchaseShip(HttpClientObject.client,shipPurchase,location)
-            }
-            input.startsWith("Default", ignoreCase = true) -> {
-                val response: HttpResponse = HttpClientObject.client.get("https://api.spacetraders.io/v2/my/ships/RUNDA-1") {
-                    bearerAuth(token)
-                    contentType(ContentType.Application.Json)
-                }
-                val apiResponse : GetMyShip200Response = response.body()
-                selectedShip = apiResponse.data
-            }
-            input.startsWith("View Ships", ignoreCase = true) -> {
-                //TODO: Format the returned values of ships in a function.
-                if (input.equals("view ships", ignoreCase = true)) {
-                    println("Warning: No shipyard provided.")
-                    continue
-                }
-                val location = Ships.getLocationSystem(selectedShip!!)
-                val splitInput = input.split(" ").toTypedArray()
-                val locationToCheck = splitInput[2]
-                displayShipyardShips(HttpClientObject.client, location, locationToCheck)
-            }
-            input.startsWith("Select Ship", ignoreCase = true) -> {
-                println("Enter ship symbol to select.")
-                val desiredShip = readLine()!!
-                selectedShip = selectAShip(HttpClientObject.client, desiredShip)
-            }
-            input.startsWith("Ships", ignoreCase = true) -> {
-                // Command testing will go here.
-                displayShipList(HttpClientObject.client)
-            }
-            input.startsWith("Ship Full Report", ignoreCase = true) -> {
-                if(selectedShip == null) {
-                    println("Ship Selection needed.")
-                    continue
-                }
-                Ships.shipReport(selectedShip)
-            }
-            input.startsWith("Fleet Full Report", ignoreCase = true) -> {
-                displayFleetReport(HttpClientObject.client)
-            }
-            input.startsWith("Waypoints", ignoreCase = true) -> {
-                if(selectedShip == null){
-                    println("WARNING: No reference ship selected. Select a ship first.")
-                    continue
-                }
-                val location = Ships.getLocationSystem(selectedShip)
-                displayWaypoints(HttpClientObject.client, location)
-            }
-            input.startsWith("Info", ignoreCase = true) -> {
-                displayAgentInfo(HttpClientObject.client)
-            }
-            input.startsWith("Contracts", ignoreCase = true) -> {
-                displayContracts(HttpClientObject.client)
-            }
-            input.startsWith("Shipyards", ignoreCase = true) -> {
-                if(selectedShip == null){
-                    println("WARNING: No reference ship selected. Select a ship first.")
-                    continue
-                }
-                val location = Ships.getLocationSystem(selectedShip)
-                lastShipYard = getShipYards(HttpClientObject.client, location)
-            }
             input.startsWith("Quit", ignoreCase = true) -> {
                 //haha
                 loop = false
@@ -478,3 +323,166 @@ suspend fun selectAShip(client: HttpClient, desiredShip: String): Ship? {
     val apiResponse: GetMyShip200Response = response.body()
     return apiResponse.data
 }
+
+// The graveyard.
+/*
+
+
+            input.startsWith("Sell",ignoreCase = true) -> {
+
+                displayShipList(HttpClientObject.client)
+                println("Select a ship: ")
+                val shipToSellFromRaw = readLine()!!
+                val shipToSellFrom = selectAShip(HttpClientObject.client, shipToSellFromRaw)
+                if(shipToSellFrom == null) {
+                    println("Error viewing ship to sell from. Try again.")
+                    continue
+                }
+                println("Ship info and cargo: ")
+                Ships.getShipCargo(shipToSellFrom)
+                println("Item to sell: ")
+                val goodToSellString = readLine()!!
+                println("Amount to sell: ")
+                val amountToSellString = readLine()!!
+                val amountToSell = amountToSellString.toInt()
+                val goodToSell = NameConverter.convertToInternal(goodToSellString)
+                println(goodToSell + " "+ amountToSellString)
+
+                val response: HttpResponse = HttpClientObject.client.post("https://api.spacetraders.io/v2/my/ships/${shipToSellFrom.symbol}/sell") {
+                    bearerAuth(token)
+                    contentType(ContentType.Application.Json)
+                    setBody(SellCargoRequest(goodToSell,amountToSell))
+                }
+                //val rawContent:String = response.bodyAsText()
+                //println(rawContent)
+                val apiResponse: SellCargo201Response = response.body()
+                //println(response.status)
+                println("Sold "+ apiResponse.data.transaction.units + " units of "+ apiResponse.data.transaction.tradeSymbol + " for a total of " + apiResponse.data.transaction.totalPrice)
+            }
+
+            input.startsWith("Market", ignoreCase = true) -> {
+                if (selectedShip != null) {
+                    if (selectedShip.nav.status.value != "DOCKED"){
+                        viewMarket(HttpClientObject.client,selectedShip, 0)
+                    } else {
+                        viewMarket(HttpClientObject.client,selectedShip,1)
+                    }
+                } else {
+                    println("Error with ship selection, be sure a ship is selected.")
+                    continue
+                }
+
+            }
+
+            input.startsWith("Extract", ignoreCase = true) -> {
+                if (input.equals("Extract", ignoreCase = true)) {
+                    extractResources(HttpClientObject.client,selectedShip!!.symbol)
+                    continue
+                }
+                val shipSymbol = input.split(" ")[1]
+                extractResources(HttpClientObject.client,shipSymbol)
+            }
+
+            input.startsWith("Orbit", ignoreCase = true) || input.startsWith("Undock", ignoreCase = true) -> {
+                if (input.equals("undock", ignoreCase = true) || input.equals("Orbit", ignoreCase = true)) {
+                    val shipSymbol = selectedShip
+                    undockShip(HttpClientObject.client,shipSymbol!!.symbol)
+                    continue
+                }
+                val shipSymbol = input.split(" ")[1]
+                undockShip(HttpClientObject.client,shipSymbol)
+            }
+
+            input.startsWith("Refuel", ignoreCase = true) -> {
+                val shipSymbol = input.split(" ")[1]
+                refuelShip(HttpClientObject.client,shipSymbol)
+            }
+            input.startsWith("Dock", ignoreCase = true) -> {
+                if (input.equals("Dock", ignoreCase = true)) {
+                    val shipSymbol = selectedShip
+                    dockAtLocation(HttpClientObject.client, shipSymbol!!.symbol)
+                    continue
+                }
+                val shipSymbol = input.split(" ")[1]
+                dockAtLocation(HttpClientObject.client,shipSymbol)
+            }
+            input.startsWith("Move", ignoreCase = true) -> {
+                if (input.split(" ").size < 3) {
+                    println("Missing parameters - Command Syntax is: Move [Ship] [Location]")
+                    continue
+                }
+                val splitInput = input.split(" ")
+                val locationToGo = splitInput[2]
+                val shipSymbol = splitInput[1]
+                navigateToLocation(HttpClientObject.client, locationToGo, shipSymbol)
+            }
+            input.startsWith("Purchase Ship", ignoreCase = true) -> {
+                //val location = Ships.getLocationSystem(selectedShip!!)
+                //Generalize This + Move to class/Function.
+                val location = lastShipYard
+                println("Shipyard Location: "+ location)
+                println("Ship to purchase: ")
+                val shipPurchase = readLine()!!
+                purchaseShip(HttpClientObject.client,shipPurchase,location)
+            }
+            input.startsWith("Default", ignoreCase = true) -> {
+                val response: HttpResponse = HttpClientObject.client.get("https://api.spacetraders.io/v2/my/ships/RUNDA-1") {
+                    bearerAuth(token)
+                    contentType(ContentType.Application.Json)
+                }
+                val apiResponse : GetMyShip200Response = response.body()
+                selectedShip = apiResponse.data
+            }
+            //NOTE: shipyard ships.
+            input.startsWith("View Ships", ignoreCase = true) -> {
+                //TODO: Format the returned values of ships in a function.
+                if (input.equals("view ships", ignoreCase = true)) {
+                    println("Warning: No shipyard provided.")
+                    continue
+                }
+                val location = Ships.getLocationSystem(selectedShip!!)
+                val splitInput = input.split(" ").toTypedArray()
+                val locationToCheck = splitInput[2]
+                displayShipyardShips(HttpClientObject.client, location, locationToCheck)
+            }
+            input.startsWith("Select Ship", ignoreCase = true) -> {
+                println("Enter ship symbol to select.")
+                val desiredShip = readLine()!!
+                selectedShip = selectAShip(HttpClientObject.client, desiredShip)
+            }
+            input.startsWith("Ships", ignoreCase = true) -> {
+                // Command testing will go here.
+                displayShipList(HttpClientObject.client)
+            }
+            input.startsWith("Ship Full Report", ignoreCase = true) -> {
+                if(selectedShip == null) {
+                    println("Ship Selection needed.")
+                    continue
+                }
+                Ships.shipReport(selectedShip)
+            }
+            input.startsWith("Fleet Full Report", ignoreCase = true) -> {
+                displayFleetReport(HttpClientObject.client)
+            }
+            input.startsWith("Waypoints", ignoreCase = true) -> {
+                if(selectedShip == null){
+                    println("WARNING: No reference ship selected. Select a ship first.")
+                    continue
+                }
+                val location = Ships.getLocationSystem(selectedShip)
+                displayWaypoints(HttpClientObject.client, location)
+            }
+            input.startsWith("Info", ignoreCase = true) -> {
+                displayAgentInfo(HttpClientObject.client)
+            }
+            input.startsWith("Contracts", ignoreCase = true) -> {
+                displayContracts(HttpClientObject.client)
+            }
+            input.startsWith("Shipyards", ignoreCase = true) -> {
+                if(selectedShip == null){
+                    println("WARNING: No reference ship selected. Select a ship first.")
+                    continue
+                }
+                val location = Ships.getLocationSystem(selectedShip)
+                lastShipYard = getShipYards(HttpClientObject.client, location)
+            }*/
