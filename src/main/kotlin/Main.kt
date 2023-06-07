@@ -15,8 +15,15 @@ import org.openapitools.client.commands.Command
 import org.openapitools.client.infrastructure.NameConverter
 import org.openapitools.client.models.*
 import java.lang.System
+import kotlin.reflect.full.createInstance
 
 val token = System.getenv("token") ?: "None"
+
+val commands = Command::class.sealedSubclasses.associate { commandClass ->
+    val commandInstance = commandClass.createInstance()
+    val commandName = commandInstance.commandName.lowercase()
+    commandName to commandInstance
+}
 
 suspend fun main(args: Array<String>) {
     var loop = true
@@ -35,7 +42,21 @@ val client = HttpClient(CIO) {
     var lastShipYard = ""
     while (loop) {
         println("***** Waiting for input *****")
-        val input = readLine()!!
+        val input = readln().lowercase()
+        if(input.isBlank()) {
+            println("Please Enter a command")
+            continue
+        }
+        val inputArgs = input.split(" ")
+        //Because commands is a map, I can use commands[inputArgs[0]], same as commands.get(inputArgs[0]).
+        val command = commands[inputArgs[0]]
+        if (command == null){
+            println("Error reading command input. Unrecognized.")
+            continue
+        }
+        val remainingCommands = inputArgs.subList(1,inputArgs.size)
+        command.processCommand(remainingCommands)
+        //All this is to be migrated to individual classes.
         when  {
             input.startsWith("Sell",ignoreCase = true) -> {
                 //TODO: Move this.

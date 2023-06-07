@@ -4,13 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8ffc3421-96e1-4f2a-96ef-3b89cc838af0" name="Changes" comment="Market Functions, Very unstable currently.">
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/HttpClientObject.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/openapitools/client/commands/Command.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/openapitools/client/commands/Move.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/openapitools/client/commands/Ships.kt" afterDir="false" />
+    <list default="true" id="8ffc3421-96e1-4f2a-96ef-3b89cc838af0" name="Changes" comment="API Updated + Command framework started, also moved HttpClient to its own object.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/Main.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Main.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/org/openapitools/client/commands/Ships.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/org/openapitools/client/commands/Ships.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -109,7 +107,7 @@
       <workItem from="1685135572703" duration="5922000" />
       <workItem from="1685433997223" duration="705000" />
       <workItem from="1685565636050" duration="7182000" />
-      <workItem from="1686161957589" duration="3626000" />
+      <workItem from="1686161957589" duration="5747000" />
     </task>
     <task id="LOCAL-00001" summary="Shipyard check + Basic info framework">
       <created>1684395051783</created>
@@ -167,7 +165,14 @@
       <option name="project" value="LOCAL" />
       <updated>1685572857003</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="API Updated + Command framework started, also moved HttpClient to its own object.">
+      <created>1686167621644</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1686167621644</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -193,7 +198,9 @@
     <MESSAGE value="Basic Navigation + Docking" />
     <MESSAGE value="Mining Addition + Undocking." />
     <MESSAGE value="Market Functions, Very unstable currently." />
-    <option name="LAST_COMMIT_MESSAGE" value="Market Functions, Very unstable currently." />
+    <MESSAGE value="API Updated + Command framework started." />
+    <MESSAGE value="API Updated + Command framework started, also moved HttpClient to its own object." />
+    <option name="LAST_COMMIT_MESSAGE" value="API Updated + Command framework started, also moved HttpClient to its own object." />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
