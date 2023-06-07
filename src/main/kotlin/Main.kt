@@ -11,6 +11,7 @@ import org.openapitools.client.apis.Contracts
 import org.openapitools.client.apis.Markets
 import org.openapitools.client.apis.Ships
 import org.openapitools.client.apis.Waypoints
+import org.openapitools.client.commands.Command
 import org.openapitools.client.infrastructure.NameConverter
 import org.openapitools.client.models.*
 import java.lang.System
@@ -19,14 +20,16 @@ val token = System.getenv("token") ?: "None"
 
 suspend fun main(args: Array<String>) {
     var loop = true
-
-    val client = HttpClient(CIO) {
+/*
+val client = HttpClient(CIO) {
         install(ContentNegotiation ) {
             json(Json {
                 ignoreUnknownKeys = true
             })
         }
     }
+ */
+
     println("\t***** Connected *****")
     var selectedShip : Ship? = null
     var lastShipYard = ""
@@ -36,10 +39,10 @@ suspend fun main(args: Array<String>) {
         when  {
             input.startsWith("Sell",ignoreCase = true) -> {
                 //TODO: Move this.
-                displayShipList(client)
+                displayShipList(HttpClientObject.client)
                 println("Select a ship: ")
                 val shipToSellFromRaw = readLine()!!
-                val shipToSellFrom = selectAShip(client, shipToSellFromRaw)
+                val shipToSellFrom = selectAShip(HttpClientObject.client, shipToSellFromRaw)
                 if(shipToSellFrom == null) {
                     println("Error viewing ship to sell from. Try again.")
                     continue
@@ -54,7 +57,7 @@ suspend fun main(args: Array<String>) {
                 val goodToSell = NameConverter.convertToInternal(goodToSellString)
                 println(goodToSell + " "+ amountToSellString)
 
-                val response: HttpResponse = client.post("https://api.spacetraders.io/v2/my/ships/${shipToSellFrom.symbol}/sell") {
+                val response: HttpResponse = HttpClientObject.client.post("https://api.spacetraders.io/v2/my/ships/${shipToSellFrom.symbol}/sell") {
                     bearerAuth(token)
                     contentType(ContentType.Application.Json)
                     setBody(SellCargoRequest(goodToSell,amountToSell))
@@ -68,9 +71,9 @@ suspend fun main(args: Array<String>) {
             input.startsWith("Market", ignoreCase = true) -> {
                 if (selectedShip != null) {
                     if (selectedShip.nav.status.value != "DOCKED"){
-                        viewMarket(client,selectedShip, 0)
+                        viewMarket(HttpClientObject.client,selectedShip, 0)
                     } else {
-                        viewMarket(client,selectedShip,1)
+                        viewMarket(HttpClientObject.client,selectedShip,1)
                     }
                 } else {
                     println("Error with ship selection, be sure a ship is selected.")
@@ -80,33 +83,33 @@ suspend fun main(args: Array<String>) {
             }
             input.startsWith("Extract", ignoreCase = true) -> {
                 if (input.equals("Extract", ignoreCase = true)) {
-                    extractResources(client,selectedShip!!.symbol)
+                    extractResources(HttpClientObject.client,selectedShip!!.symbol)
                     continue
                 }
                 val shipSymbol = input.split(" ")[1]
-                extractResources(client,shipSymbol)
+                extractResources(HttpClientObject.client,shipSymbol)
             }
             input.startsWith("Orbit", ignoreCase = true) || input.startsWith("Undock", ignoreCase = true) -> {
                 if (input.equals("undock", ignoreCase = true) || input.equals("Orbit", ignoreCase = true)) {
                     val shipSymbol = selectedShip
-                    undockShip(client,shipSymbol!!.symbol)
+                    undockShip(HttpClientObject.client,shipSymbol!!.symbol)
                     continue
                 }
                 val shipSymbol = input.split(" ")[1]
-                undockShip(client,shipSymbol)
+                undockShip(HttpClientObject.client,shipSymbol)
             }
             input.startsWith("Refuel", ignoreCase = true) -> {
                 val shipSymbol = input.split(" ")[1]
-                refuelShip(client,shipSymbol)
+                refuelShip(HttpClientObject.client,shipSymbol)
             }
             input.startsWith("Dock", ignoreCase = true) -> {
                 if (input.equals("Dock", ignoreCase = true)) {
                     val shipSymbol = selectedShip
-                    dockAtLocation(client, shipSymbol!!.symbol)
+                    dockAtLocation(HttpClientObject.client, shipSymbol!!.symbol)
                     continue
                 }
                 val shipSymbol = input.split(" ")[1]
-                dockAtLocation(client,shipSymbol)
+                dockAtLocation(HttpClientObject.client,shipSymbol)
             }
             input.startsWith("Move", ignoreCase = true) -> {
                 if (input.split(" ").size < 3) {
@@ -116,7 +119,7 @@ suspend fun main(args: Array<String>) {
                 val splitInput = input.split(" ")
                 val locationToGo = splitInput[2]
                 val shipSymbol = splitInput[1]
-                navigateToLocation(client, locationToGo, shipSymbol)
+                navigateToLocation(HttpClientObject.client, locationToGo, shipSymbol)
             }
             input.startsWith("Purchase Ship", ignoreCase = true) -> {
                 //val location = Ships.getLocationSystem(selectedShip!!)
@@ -125,10 +128,10 @@ suspend fun main(args: Array<String>) {
                 println("Shipyard Location: "+ location)
                 println("Ship to purchase: ")
                 val shipPurchase = readLine()!!
-                purchaseShip(client,shipPurchase,location)
+                purchaseShip(HttpClientObject.client,shipPurchase,location)
             }
             input.startsWith("Default", ignoreCase = true) -> {
-                val response: HttpResponse = client.get("https://api.spacetraders.io/v2/my/ships/RUNDA-1") {
+                val response: HttpResponse = HttpClientObject.client.get("https://api.spacetraders.io/v2/my/ships/RUNDA-1") {
                     bearerAuth(token)
                     contentType(ContentType.Application.Json)
                 }
@@ -144,16 +147,16 @@ suspend fun main(args: Array<String>) {
                 val location = Ships.getLocationSystem(selectedShip!!)
                 val splitInput = input.split(" ").toTypedArray()
                 val locationToCheck = splitInput[2]
-                displayShipyardShips(client, location, locationToCheck)
+                displayShipyardShips(HttpClientObject.client, location, locationToCheck)
             }
             input.startsWith("Select Ship", ignoreCase = true) -> {
                 println("Enter ship symbol to select.")
                 val desiredShip = readLine()!!
-                selectedShip = selectAShip(client, desiredShip)
+                selectedShip = selectAShip(HttpClientObject.client, desiredShip)
             }
             input.startsWith("Ships", ignoreCase = true) -> {
-
-                displayShipList(client)
+                // Command testing will go here.
+                displayShipList(HttpClientObject.client)
             }
             input.startsWith("Ship Full Report", ignoreCase = true) -> {
                 if(selectedShip == null) {
@@ -163,7 +166,7 @@ suspend fun main(args: Array<String>) {
                 Ships.shipReport(selectedShip)
             }
             input.startsWith("Fleet Full Report", ignoreCase = true) -> {
-                displayFleetReport(client)
+                displayFleetReport(HttpClientObject.client)
             }
             input.startsWith("Waypoints", ignoreCase = true) -> {
                 if(selectedShip == null){
@@ -171,13 +174,13 @@ suspend fun main(args: Array<String>) {
                     continue
                 }
                 val location = Ships.getLocationSystem(selectedShip)
-                displayWaypoints(client, location)
+                displayWaypoints(HttpClientObject.client, location)
             }
             input.startsWith("Info", ignoreCase = true) -> {
-                displayAgentInfo(client)
+                displayAgentInfo(HttpClientObject.client)
             }
             input.startsWith("Contracts", ignoreCase = true) -> {
-                displayContracts(client)
+                displayContracts(HttpClientObject.client)
             }
             input.startsWith("Shipyards", ignoreCase = true) -> {
                 if(selectedShip == null){
@@ -185,7 +188,7 @@ suspend fun main(args: Array<String>) {
                     continue
                 }
                 val location = Ships.getLocationSystem(selectedShip)
-                lastShipYard = getShipYards(client, location)
+                lastShipYard = getShipYards(HttpClientObject.client, location)
             }
             input.startsWith("Quit", ignoreCase = true) -> {
                 //haha
@@ -195,7 +198,7 @@ suspend fun main(args: Array<String>) {
             else -> println("Error with input.")
         }
     }
-    client.close()
+    HttpClientObject.client.close()
 }
 
 /**
@@ -210,7 +213,7 @@ suspend fun viewMarket(client: HttpClient, selectedShip: Ship?, i: Int) {
     if(i == 0){
         val shipSystem = selectedShip.nav.systemSymbol
         val shipLocation = selectedShip.nav.waypointSymbol
-        val response: HttpResponse = client.get("https://api.spacetraders.io/v2/systems/${shipSystem}/waypoints/${shipLocation}/market") {
+        val response: HttpResponse = HttpClientObject.client.get("https://api.spacetraders.io/v2/systems/${shipSystem}/waypoints/${shipLocation}/market") {
             bearerAuth(token)
             contentType(ContentType.Application.Json)
         }
@@ -221,7 +224,7 @@ suspend fun viewMarket(client: HttpClient, selectedShip: Ship?, i: Int) {
     if (i == 1){
         val shipSystem = selectedShip.nav.systemSymbol
         val shipLocation = selectedShip.nav.waypointSymbol
-        val response: HttpResponse = client.get("https://api.spacetraders.io/v2/systems/${shipSystem}/waypoints/${shipLocation}/market") {
+        val response: HttpResponse = HttpClientObject.client.get("https://api.spacetraders.io/v2/systems/${shipSystem}/waypoints/${shipLocation}/market") {
             bearerAuth(token)
             contentType(ContentType.Application.Json)
         }
@@ -237,7 +240,7 @@ suspend fun viewMarket(client: HttpClient, selectedShip: Ship?, i: Int) {
  * Function to extract resources from whatever the ship is orbiting.
  */
 suspend fun extractResources(client: HttpClient, shipSymbol: String) {
-    val response: HttpResponse = client.post("https://api.spacetraders.io/v2/my/ships/${shipSymbol}/extract") {
+    val response: HttpResponse = HttpClientObject.client.post("https://api.spacetraders.io/v2/my/ships/${shipSymbol}/extract") {
         bearerAuth(token)
         contentType(ContentType.Application.Json)
         setBody(ExtractResourcesRequest(survey = null))
@@ -256,7 +259,7 @@ suspend fun extractResources(client: HttpClient, shipSymbol: String) {
  * Undock a waypoint and enter orbit.
  */
 suspend fun undockShip(client: HttpClient, shipSymbol: String) {
-    val response: HttpResponse = client.post("https://api.spacetraders.io/v2/my/ships/${shipSymbol}/orbit") {
+    val response: HttpResponse = HttpClientObject.client.post("https://api.spacetraders.io/v2/my/ships/${shipSymbol}/orbit") {
         bearerAuth(token)
         contentType(ContentType.Application.Json)
     }
@@ -269,7 +272,7 @@ suspend fun undockShip(client: HttpClient, shipSymbol: String) {
  */
 suspend fun refuelShip(client: HttpClient, shipSymbol: String) {
     //TODO: Move these off into class for formatting maybe
-    val response: HttpResponse = client.post("https://api.spacetraders.io/v2/my/ships/${shipSymbol}/refuel") {
+    val response: HttpResponse = HttpClientObject.client.post("https://api.spacetraders.io/v2/my/ships/${shipSymbol}/refuel") {
         bearerAuth(token)
         contentType(ContentType.Application.Json)
     }
@@ -288,7 +291,7 @@ suspend fun refuelShip(client: HttpClient, shipSymbol: String) {
  */
 suspend fun dockAtLocation(client: HttpClient, shipSymbol: String) {
     //TODO: Move these off into their own classes for formatting.
-    val response: HttpResponse = client.post("https://api.spacetraders.io/v2/my/ships/${shipSymbol}/dock") {
+    val response: HttpResponse = HttpClientObject.client.post("https://api.spacetraders.io/v2/my/ships/${shipSymbol}/dock") {
         bearerAuth(token)
         contentType(ContentType.Application.Json)
     }
@@ -303,7 +306,7 @@ suspend fun dockAtLocation(client: HttpClient, shipSymbol: String) {
  */
 suspend fun navigateToLocation(client: HttpClient, locationToGo: String, shipSymbol: String) {
     //TODO: Move these off into their own classes for formatting.
-    val response: HttpResponse = client.post("https://api.spacetraders.io/v2/my/ships/${shipSymbol}/navigate") {
+    val response: HttpResponse = HttpClientObject.client.post("https://api.spacetraders.io/v2/my/ships/${shipSymbol}/navigate") {
         bearerAuth(token)
         contentType(ContentType.Application.Json)
         setBody(NavigateShipRequest(locationToGo))
@@ -333,7 +336,7 @@ suspend fun purchaseShip(client: HttpClient, shipPurchase: String, location: Str
     when {
         shipPurchase.equals("Mining Drone") -> {
             println("Purchasing Mining Drone")
-            val response: HttpResponse = client.post("https://api.spacetraders.io/v2/my/ships") {
+            val response: HttpResponse = HttpClientObject.client.post("https://api.spacetraders.io/v2/my/ships") {
                 bearerAuth(token)
                 contentType(ContentType.Application.Json)
                 setBody(PurchaseShipRequest(ShipType.mININGDRONE, location))
@@ -347,7 +350,7 @@ suspend fun purchaseShip(client: HttpClient, shipPurchase: String, location: Str
  * Function to display ships for sale at selected shipyard.
  */
 suspend fun displayShipyardShips(client: HttpClient, location: String, locationToCheck: String) {
-    val response: HttpResponse = client.get("https://api.spacetraders.io/v2/systems/${location}/waypoints/${locationToCheck}/shipyard") {
+    val response: HttpResponse = HttpClientObject.client.get("https://api.spacetraders.io/v2/systems/${location}/waypoints/${locationToCheck}/shipyard") {
         bearerAuth(token)
         contentType(ContentType.Application.Json)
     }
@@ -359,10 +362,13 @@ suspend fun displayShipyardShips(client: HttpClient, location: String, locationT
  * Function to display just a list of ships, a much more basic fleet selection.
  */
 suspend fun displayShipList(client: HttpClient) {
-    val response: HttpResponse = client.get("https://api.spacetraders.io/v2/my/ships") {
+    val response: HttpResponse = HttpClientObject.client.get("https://api.spacetraders.io/v2/my/ships") {
         bearerAuth(token)
         contentType(ContentType.Application.Json)
     }
+
+    val rawContent = response.bodyAsText()
+    println(rawContent)
     val apiResponse: GetMyShips200Response = response.body()
     Ships.getShips(apiResponse)
 }
@@ -372,7 +378,7 @@ suspend fun displayShipList(client: HttpClient) {
  * WARNING: May be very long.
  */
 suspend fun displayFleetReport(client: HttpClient) {
-    val response: HttpResponse = client.get("https://api.spacetraders.io/v2/my/ships") {
+    val response: HttpResponse = HttpClientObject.client.get("https://api.spacetraders.io/v2/my/ships") {
         bearerAuth(token)
         contentType(ContentType.Application.Json)
     }
@@ -389,7 +395,7 @@ suspend fun displayFleetReport(client: HttpClient) {
  */
 suspend fun displayWaypoints(client: HttpClient, location: String) {
     //X1-ZA40
-    val response: HttpResponse = client.get("https://api.spacetraders.io/v2/systems/${location}/waypoints") {
+    val response: HttpResponse = HttpClientObject.client.get("https://api.spacetraders.io/v2/systems/${location}/waypoints") {
         bearerAuth(token)
         contentType(ContentType.Application.Json)
     }
@@ -402,7 +408,7 @@ suspend fun displayWaypoints(client: HttpClient, location: String) {
  * Displays account Id, Headquarters, credits and faction.
  */
 suspend fun displayAgentInfo(client: HttpClient) {
-    val response: HttpResponse = client.get("https://api.spacetraders.io/v2/my/agent") {
+    val response: HttpResponse = HttpClientObject.client.get("https://api.spacetraders.io/v2/my/agent") {
         bearerAuth(token)
         contentType(ContentType.Application.Json)
     }
@@ -415,7 +421,7 @@ suspend fun displayAgentInfo(client: HttpClient) {
  * Function to display all contracts
  */
 suspend fun displayContracts(client: HttpClient) {
-    val response: HttpResponse = client.get("https://api.spacetraders.io/v2/my/contracts/") {
+    val response: HttpResponse = HttpClientObject.client.get("https://api.spacetraders.io/v2/my/contracts/") {
         bearerAuth(token)
         contentType(ContentType.Application.Json)
     }
@@ -429,7 +435,7 @@ suspend fun displayContracts(client: HttpClient) {
  *
  */
 suspend fun getShipYards(client: HttpClient, location: String): String {
-    val response: HttpResponse = client.get("https://api.spacetraders.io/v2/systems/${location}/waypoints") {
+    val response: HttpResponse = HttpClientObject.client.get("https://api.spacetraders.io/v2/systems/${location}/waypoints") {
         bearerAuth(token)
         contentType(ContentType.Application.Json)
     }
@@ -444,7 +450,7 @@ suspend fun getShipYards(client: HttpClient, location: String): String {
  * @param desiredShip Symbol of ship wanted to select and return ie. MYAGENT-1
  */
 suspend fun selectAShip(client: HttpClient, desiredShip: String): Ship? {
-    val response: HttpResponse = client.get("https://api.spacetraders.io/v2/my/ships/${desiredShip}") {
+    val response: HttpResponse = HttpClientObject.client.get("https://api.spacetraders.io/v2/my/ships/${desiredShip}") {
         bearerAuth(token)
         contentType(ContentType.Application.Json)
     }

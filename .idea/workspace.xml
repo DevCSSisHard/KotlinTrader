@@ -4,11 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8ffc3421-96e1-4f2a-96ef-3b89cc838af0" name="Changes" comment="Mining Addition + Undocking.">
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/openapitools/client/apis/Markets.kt" afterDir="false" />
+    <list default="true" id="8ffc3421-96e1-4f2a-96ef-3b89cc838af0" name="Changes" comment="Market Functions, Very unstable currently.">
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/HttpClientObject.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/openapitools/client/commands/Command.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/openapitools/client/commands/Move.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/openapitools/client/commands/Ships.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/Main.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Main.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/org/openapitools/client/infrastructure/NameConverter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/org/openapitools/client/infrastructure/NameConverter.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,6 +25,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Kotlin Sealed Interface" />
+        <option value="Kotlin Object" />
         <option value="Kotlin Class" />
       </list>
     </option>
@@ -70,7 +74,7 @@
   <component name="RunManager">
     <configuration name="MainKt" type="JetRunConfigurationType" nameIsGenerated="true">
       <envs>
-        <env name="token" value="eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGlmaWVyIjoiUlVOREEiLCJ2ZXJzaW9uIjoidjIiLCJyZXNldF9kYXRlIjoiMjAyMy0wNS0yMCIsImlhdCI6MTY4NDc4MDYyNywic3ViIjoiYWdlbnQtdG9rZW4ifQ.jLbI9AiS5NX7fce0rctXlOxrl154luYMkmp5uAgAn1s-DOTGFL2edzbqr4cFcJVpTY_GacYaS1XikYp8xXXmqvM-akHv7dH-vkwKC86V29my-OM0cvXqbcHN80ExMYjuBhuE92OhFPraPrdr2ssH64QeHaZ8qmySK8Sa6BZ-AGxqQTGQv_yMMu7p6AG7clp1Ro5pJ8_vJZyYBDEUXy6L3NDLT4hfIjv2dkTOu7a53KZQe1uaLkeZdZZx5NwwQcyMYKOs51jsAyopbgAJ8GT7sWUc0dJAQhd8XSLayNfK7khjSq-KrRY9aJKpxaV5jV8kzbOo6boZ42XkIxos2b5gtw" />
+        <env name="token" value="eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGlmaWVyIjoiUlVOREEiLCJ2ZXJzaW9uIjoidjIiLCJyZXNldF9kYXRlIjoiMjAyMy0wNi0wMyIsImlhdCI6MTY4NjE2NDUzNCwic3ViIjoiYWdlbnQtdG9rZW4ifQ.GDmqplFFsFDzcoVPTV2cxo0m0urBaY0VHwKzwcjJn-JMfVw-Y575Kc833ic6hseBTCfcAz1ZqWTsPrvYMG9J8wHGC1g3jitbLP3WevQHGn9SxtPDzbg3NaU5KqJAaxzWjUjgUz4hP97UHOnPVD2weFaAK4Y4gNV0PvevIrmsXn3EacG5dw4gJ1m-xus83mgKy6cQOxXykfqelDjOj5bFgeC3A8VrRQHXMc6axcdP5bmH8OLuiqX382p2WJlTlg41GAlzFxLHRWQfLitpnyRlTptwNwVv6gk2HGL3Hy3aB81BYwO1x6wPECwGWz3JdyxgDL3b-F4ollwLx0nwzrA0LA" />
       </envs>
       <option name="MAIN_CLASS_NAME" value="MainKt" />
       <module name="SpaceTraderIO.main" />
@@ -104,7 +108,8 @@
       <workItem from="1685073262001" duration="2610000" />
       <workItem from="1685135572703" duration="5922000" />
       <workItem from="1685433997223" duration="705000" />
-      <workItem from="1685565636050" duration="6910000" />
+      <workItem from="1685565636050" duration="7182000" />
+      <workItem from="1686161957589" duration="3626000" />
     </task>
     <task id="LOCAL-00001" summary="Shipyard check + Basic info framework">
       <created>1684395051783</created>
@@ -155,7 +160,14 @@
       <option name="project" value="LOCAL" />
       <updated>1685141524279</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Market Functions, Very unstable currently.">
+      <created>1685572857003</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1685572857003</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -180,7 +192,8 @@
     <MESSAGE value="Reformatting and cleaning of code." />
     <MESSAGE value="Basic Navigation + Docking" />
     <MESSAGE value="Mining Addition + Undocking." />
-    <option name="LAST_COMMIT_MESSAGE" value="Mining Addition + Undocking." />
+    <MESSAGE value="Market Functions, Very unstable currently." />
+    <option name="LAST_COMMIT_MESSAGE" value="Market Functions, Very unstable currently." />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
