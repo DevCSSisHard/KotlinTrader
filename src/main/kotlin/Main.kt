@@ -61,7 +61,6 @@ val client = HttpClient(CIO) {
                 loop = false
                 break
             }
-            else -> println("Error with input.")
         }
     }
     HttpClientObject.client.close()

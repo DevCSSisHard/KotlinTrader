@@ -13,8 +13,10 @@ class Move : Command {
     override val commandName: String = "Move"
 
     override suspend fun processCommand(remainingCommands: List<String>) {
-        val locationToGo = remainingCommands[2]
-        val shipSymbol = remainingCommands[1]
+        val locationToGo = remainingCommands[1].uppercase()
+        val shipSymbol = remainingCommands[0].uppercase()
+        print("Location: "+locationToGo+ " Ship: "+shipSymbol)
+        //TODO: Check for orbit here.
         navigateToLocation(HttpClientObject.client, locationToGo, shipSymbol)
     }
 
@@ -24,6 +26,8 @@ class Move : Command {
             contentType(ContentType.Application.Json)
             setBody(NavigateShipRequest(locationToGo))
         }
+        val rawContent = response.bodyAsText()
+        print(rawContent)
         val apiResponse: NavigateShip200Response = response.body()
 
         println("Ship en-route to: "+ apiResponse.data.nav.route.destination)

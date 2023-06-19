@@ -12,7 +12,8 @@ class Select: Command {
     override val commandName: String = "Select"
 
     override suspend fun processCommand(remainingCommands: List<String>) {
-        if (remainingCommands[1] == "Ship") {
+        print(remainingCommands)
+        if (remainingCommands[0] == "ship") {
             println("Enter ship symbol to select.")
             val desiredShip = readLine()!!
             val response: HttpResponse = HttpClientObject.client.get("https://api.spacetraders.io/v2/my/ships/${desiredShip}") {

@@ -12,7 +12,7 @@ class Purchase: Command {
     override val commandName: String="Purchase"
 
     override suspend fun processCommand(remainingCommands: List<String>) {
-        if(remainingCommands[1] == "Ship"){
+        if(remainingCommands[0] == "ship"){
             val location = CurrentData.lastShipYard
             println("Shipyard Location: "+ location)
             println("Ship to purchase: ")
@@ -22,14 +22,17 @@ class Purchase: Command {
     }
 
     private suspend fun purchaseShip(client: HttpClient, shipPurchase: String, location: String) {
+        print(shipPurchase)
         when {
-            shipPurchase.equals("Mining Drone") -> {
+            shipPurchase.equals("mining drone") -> {
                 println("Purchasing Mining Drone")
                 val response: HttpResponse = HttpClientObject.client.post("https://api.spacetraders.io/v2/my/ships") {
                     bearerAuth(token)
                     contentType(ContentType.Application.Json)
                     setBody(PurchaseShipRequest(ShipType.mININGDRONE, location))
                 }
+                val rawContent = response.bodyAsText()
+                print(rawContent)
                 println("Purchase Complete. " + response.status)
             }
         }

@@ -4,27 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8ffc3421-96e1-4f2a-96ef-3b89cc838af0" name="Changes" comment="Command Framework implemented. Migrations soon. Added Kotlin Reflections.">
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/CurrentData.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/openapitools/client/commands/Contracts.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/openapitools/client/commands/Default.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/openapitools/client/commands/Dock.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/openapitools/client/commands/Extract.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/openapitools/client/commands/Info.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/openapitools/client/commands/Market.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/openapitools/client/commands/Orbit.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/openapitools/client/commands/Purchase.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/openapitools/client/commands/Refuel.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/openapitools/client/commands/Report.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/openapitools/client/commands/Select.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/openapitools/client/commands/Sell.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/openapitools/client/commands/Shipyards.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/openapitools/client/commands/Undock.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/openapitools/client/commands/View.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/openapitools/client/commands/Waypoints.kt" afterDir="false" />
+    <list default="true" id="8ffc3421-96e1-4f2a-96ef-3b89cc838af0" name="Changes" comment="Migration Almost done, quit functionality needs to be added. Plenty doesn't work currently.">
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/org/openapitools/client/commands/Register.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/Main.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Main.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/org/openapitools/client/commands/Move.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/org/openapitools/client/commands/Move.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/org/openapitools/client/commands/Purchase.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/org/openapitools/client/commands/Purchase.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/org/openapitools/client/commands/Select.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/org/openapitools/client/commands/Select.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -89,7 +75,7 @@
   <component name="RunManager">
     <configuration name="MainKt" type="JetRunConfigurationType" nameIsGenerated="true">
       <envs>
-        <env name="token" value="eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGlmaWVyIjoiUlVOREEiLCJ2ZXJzaW9uIjoidjIiLCJyZXNldF9kYXRlIjoiMjAyMy0wNi0wMyIsImlhdCI6MTY4NjE2NDUzNCwic3ViIjoiYWdlbnQtdG9rZW4ifQ.GDmqplFFsFDzcoVPTV2cxo0m0urBaY0VHwKzwcjJn-JMfVw-Y575Kc833ic6hseBTCfcAz1ZqWTsPrvYMG9J8wHGC1g3jitbLP3WevQHGn9SxtPDzbg3NaU5KqJAaxzWjUjgUz4hP97UHOnPVD2weFaAK4Y4gNV0PvevIrmsXn3EacG5dw4gJ1m-xus83mgKy6cQOxXykfqelDjOj5bFgeC3A8VrRQHXMc6axcdP5bmH8OLuiqX382p2WJlTlg41GAlzFxLHRWQfLitpnyRlTptwNwVv6gk2HGL3Hy3aB81BYwO1x6wPECwGWz3JdyxgDL3b-F4ollwLx0nwzrA0LA" />
+        <env name="token" value="eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGlmaWVyIjoiUlVOREEiLCJ2ZXJzaW9uIjoidjIiLCJyZXNldF9kYXRlIjoiMjAyMy0wNi0xNyIsImlhdCI6MTY4NzE4MzE2NCwic3ViIjoiYWdlbnQtdG9rZW4ifQ.ZpGVzuHazaxWy0W5FreoKkOekSi49bfjoN5eHBgpdR3vRmSCJibJivdx8zKRnbmrd2mNZs3-p_YsHV3cBmEgnxavZ7P1DfVkBlnsgYURvA3qC0ik2FWoGCRfUb0pAzMPmA9D_YGswUJGg8arhqk0C9nK8dqmFN9Hx0hjZeSy3aePJfNOcN_xjSxFzkYco3t_wzNkGZ5IxlwvKtICcDz3uIKVHPa-avDSGVH8aSp_COpUYZXU-ItoH6DOmjwXIkoIZk6VWIf9vLiW0GYgFWW436LUodeczRFInvZfuk8Ww5De-UMa_Ge2bwNumZPkp19pyKVGQKnESRkwsC9T29DLaA" />
       </envs>
       <option name="MAIN_CLASS_NAME" value="MainKt" />
       <module name="SpaceTraderIO.main" />
@@ -124,7 +110,8 @@
       <workItem from="1685135572703" duration="5922000" />
       <workItem from="1685433997223" duration="705000" />
       <workItem from="1685565636050" duration="7182000" />
-      <workItem from="1686161957589" duration="11191000" />
+      <workItem from="1686161957589" duration="11260000" />
+      <workItem from="1687182679962" duration="2389000" />
     </task>
     <task id="LOCAL-00001" summary="Shipyard check + Basic info framework">
       <created>1684395051783</created>
@@ -196,7 +183,14 @@
       <option name="project" value="LOCAL" />
       <updated>1686169810746</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Migration Almost done, quit functionality needs to be added. Plenty doesn't work currently.">
+      <created>1686175185995</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1686175185995</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -225,7 +219,8 @@
     <MESSAGE value="API Updated + Command framework started." />
     <MESSAGE value="API Updated + Command framework started, also moved HttpClient to its own object." />
     <MESSAGE value="Command Framework implemented. Migrations soon. Added Kotlin Reflections." />
-    <option name="LAST_COMMIT_MESSAGE" value="Command Framework implemented. Migrations soon. Added Kotlin Reflections." />
+    <MESSAGE value="Migration Almost done, quit functionality needs to be added. Plenty doesn't work currently." />
+    <option name="LAST_COMMIT_MESSAGE" value="Migration Almost done, quit functionality needs to be added. Plenty doesn't work currently." />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
